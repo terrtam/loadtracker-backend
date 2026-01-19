@@ -1,0 +1,195 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY3Mzc5Mjk0LCJleHAiOjE3NjczODI4OTR9.k3dmywAKxzEKn31_MKmixUF6Wtl7rtg8GEyH_wOgOjg
+
+### =========================================
+### SESSION TESTS (MATCHING app-config.json)
+### =========================================
+
+### SIGNUP
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+### LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+
+### ❌ TEST 1 — Strength set missing RPE (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:00:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "BARBELL_BACK_SQUAT",
+      "reps": 5,
+      "weight": 315
+    }
+  ]
+}
+
+
+### ❌ TEST 2 — Strength set missing weight (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:05:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "BARBELL_BACK_SQUAT",
+      "reps": 5,
+      "rpe": 8
+    }
+  ]
+}
+
+
+### ❌ TEST 3 — Cardio set missing durationSeconds (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:10:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "RUN",
+      "rpe": 6
+    }
+  ]
+}
+
+
+### ❌ TEST 4 — RPE is null (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:15:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "BARBELL_BACK_SQUAT",
+      "reps": 3,
+      "weight": 365,
+      "rpe": null
+    }
+  ]
+}
+
+
+### ❌ TEST 5 — Empty session (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:20:00.000Z",
+  "sets": []
+}
+
+
+### ✅ TEST 6 — Valid strength session (should PASS)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:25:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "BARBELL_BACK_SQUAT",
+      "reps": 5,
+      "weight": 315,
+      "rpe": 8.5
+    },
+    {
+      "exercise_code": "BARBELL_BACK_SQUAT",
+      "reps": 5,
+      "weight": 295,
+      "rpe": 9
+    }
+  ]
+}
+
+
+### ✅ TEST 7 — Valid cardio session (should PASS)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:30:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "RUN",
+      "durationSeconds": 900,
+      "rpe": 6
+    }
+  ]
+}
+
+
+### ✅ TEST 8 — Valid plyometric session (should PASS)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:35:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "COUNTERMOVEMENT_JUMP",
+      "reps": 5,
+      "rpe": 7
+    }
+  ]
+}
+
+
+### ✅ TEST 9 — Valid isometric session (should PASS)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:40:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "SPANISH_SQUAT",
+      "durationSeconds": 45,
+      "rpe": 8
+    }
+  ]
+}
+
+
+### ❌ TEST 10 — Wrong field for plyometric (duration instead of reps) (should FAIL)
+POST {{baseUrl}}/api/sessions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "date": "2026-01-02T12:45:00.000Z",
+  "sets": [
+    {
+      "exercise_code": "COUNTERMOVEMENT_JUMP",
+      "durationSeconds": 10,
+      "rpe": 7
+    }
+  ]
+}

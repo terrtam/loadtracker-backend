@@ -1,0 +1,99 @@
+generator client {
+  provider    = "prisma-client-js"
+  engineType  = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+//
+// ENUMS
+//
+enum Side {
+  left
+  right
+}
+
+//
+// MODELS
+//
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+
+  resetTokenHash String?
+  resetTokenExp  DateTime?  
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  bodyPartProfiles BodyPartProfile[]
+  sessions         Session[]
+  wellnessLogs     WellnessLog[]
+}
+
+model BodyPartProfile {
+  id             Int     @id @default(autoincrement()) @map("body_part_profile_id")
+  user_id        Int
+  bodyPartName   String  @map("body_part_name")
+  side           Side
+  archived        Boolean  @default(false)
+  archived_at     DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  wellnessLogs WellnessLog[]
+
+  @@unique([user_id, bodyPartName, side])
+}
+
+
+model Session {
+  id      Int      @id @default(autoincrement()) @map("session_id")
+  user_id Int
+  date    DateTime
+  notes   String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  sets ExerciseSet[]
+}
+
+model ExerciseSet {
+  id            Int     @id @default(autoincrement()) @map("exercise_set_id")
+  session_id    Int
+  exercise_code String
+
+  reps     Int?
+  weight   Float?
+  duration Int?
+  rpe      Int?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
+}
+
+model WellnessLog {
+  id                   Int      @id @default(autoincrement()) @map("wellness_log_id")
+  user_id              Int
+  body_part_profile_id Int
+
+  logged_at      DateTime
+  pain_score     Int
+  fatigue_score Int
+
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  bodyPartProfile BodyPartProfile @relation(fields: [body_part_profile_id], references: [id], onDelete: Cascade)
+}
+

@@ -1,0 +1,77 @@
+@baseUrl = http://localhost:3000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY2ODEwMDY1LCJleHAiOjE3NjY4MTM2NjV9.ZDXVXiTxdA6jlfN-GhdRgliovr6pOFb92622vAoW1Yc
+
+###
+# ===== HEALTH CHECK =====
+GET {{baseUrl}}/health
+
+### SIGNUP
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+### LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+###
+# ===== CREATE BODY PART PROFILE =====
+POST {{baseUrl}}/body-part-profiles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bodyPartName": "Chest",
+  "side": "left"
+}
+
+###
+# ===== CREATE (DUPLICATE — SHOULD 409) =====
+POST {{baseUrl}}/body-part-profiles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bodyPartName": "Chest",
+  "side": "left"
+}
+
+###
+# ===== CREATE ANOTHER =====
+POST {{baseUrl}}/body-part-profiles
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bodyPartName": "Shoulder",
+  "side": "right"
+}
+
+###
+# ===== FETCH ACTIVE PROFILES =====
+GET {{baseUrl}}/body-part-profiles?archived=false
+Authorization: Bearer {{token}}
+
+###
+# ===== ARCHIVE PROFILE (CHANGE ID) =====
+PATCH {{baseUrl}}/body-part-profiles/1/archive
+Authorization: Bearer {{token}}
+
+###
+# ===== FETCH ARCHIVED PROFILES =====
+GET {{baseUrl}}/body-part-profiles?archived=true
+Authorization: Bearer {{token}}
+
+###
+# ===== UNARCHIVE PROFILE (CHANGE ID) =====
+PATCH {{baseUrl}}/body-part-profiles/1/unarchive
+Authorization: Bearer {{token}}

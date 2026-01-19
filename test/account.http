@@ -1,0 +1,48 @@
+@baseUrl = http://localhost:3000/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY2Nzg0Nzg0LCJleHAiOjE3NjY3ODgzODR9.h_qK_C1OSoBzWk4UF1v-dFHf89hWOOzVo7DTPE4Xh9E
+
+###
+# ===== HEALTH CHECK =====
+GET {{baseUrl}}/health
+
+### SIGNUP
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+### LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "123456"
+}
+
+### ME
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY2MzgzMDkxLCJleHAiOjE3NjYzODY2OTF9.TqNltsEugcc6W_hz-H9MNYGJnK5yCyXMK-O1GZ-uynM
+
+
+### Change password
+POST http://localhost:3000/api/auth/change-password
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzY2Mzg2ODgxLCJleHAiOjE3NjYzOTA0ODF9.tSrpNaoiw1BQHoJUqpSvUvNhbiesOK4rX9hmEteKqXk
+Content-Type: application/json
+
+{
+  "currentPassword": "password",
+  "newPassword": "newpassword123"
+}
+
+### Delete Account
+POST http://localhost:3000/api/auth/delete-account
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzY2NDMwMjYyLCJleHAiOjE3NjY0MzM4NjJ9.2jIeV7EAMMNKyiLOfDnnV81tCXGqqBLn5QP_Frox5wM
+Content-Type: application/json
+
+{
+  "password": "password123"
+}

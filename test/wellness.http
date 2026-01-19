@@ -1,0 +1,110 @@
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzY3NjQyNDkzLCJleHAiOjE3Njc2NDYwOTN9.nebUdf-R80w4HUiKCZj7W4M53bCGgwbhL2bOkx4wqvQ
+
+### =========================================
+### WELLNESS MODULE TESTS
+### =========================================
+
+### SIGNUP
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+### LOGIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "newuser@test.com",
+  "password": "password123"
+}
+
+### ----------------------------------------
+### Create Body Part Profile
+### ----------------------------------------
+POST {{baseUrl}}/api/body-part-profiles
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "bodyPartName": "Shoulder",
+  "side": "left"
+}
+
+### ----------------------------------------
+### Create Wellness Log (with bodyPartProfile)
+### ----------------------------------------
+POST {{baseUrl}}/api/wellness
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "bodyPartProfileId": 1,
+  "painScore": 4,
+  "fatigueScore": 6,
+  "loggedAt": "2026-01-05T10:00:00.000Z"
+}
+
+### ----------------------------------------
+### Create Wellness Log (today, default loggedAt)
+### ----------------------------------------
+POST {{baseUrl}}/api/wellness
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "bodyPartProfileId": 1,
+  "painScore": 2,
+  "fatigueScore": 3
+}
+
+### ----------------------------------------
+### List Wellness Logs (all)
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness
+Authorization: Bearer {{token}}
+
+### ----------------------------------------
+### List filtered by bodyPartProfile
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness?bodyPartProfileId=1
+Authorization: Bearer {{token}}
+
+### ----------------------------------------
+### List within date range
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness?from=2026-01-01&to=2026-01-31
+Authorization: Bearer {{token}}
+
+### ----------------------------------------
+### List with limit
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness?limit=10
+Authorization: Bearer {{token}}
+
+### ----------------------------------------
+### List with date + bodyPartProfile + limit
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness?bodyPartProfileId=1&from=2026-01-01&to=2026-01-31&limit=5
+Authorization: Bearer {{token}}
+
+### ----------------------------------------
+### Validation Error (missing bodyPartProfileId)
+### ----------------------------------------
+POST {{baseUrl}}/api/wellness
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "painScore": 5,
+  "fatigueScore": 4
+}
+
+### ----------------------------------------
+### Unauthorized (no token)
+### ----------------------------------------
+GET {{baseUrl}}/api/wellness

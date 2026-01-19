@@ -1,0 +1,238 @@
+{
+  "version": "1.1",
+
+  "bodyParts": {
+    "chest": "Chest",
+    "shoulder": "Shoulder",
+    "elbow": "Elbow",
+    "back": "Back",
+    "spine": "Spine",
+    "core": "Core",
+    "hip": "Hip",
+    "knee": "Knee",
+    "ankle": "Ankle"
+  },
+
+  "exerciseTypes": {
+    "strength": "Strength",
+    "cardio": "Cardio",
+    "plyometric": "Plyometric",
+    "isometric": "Isometric"
+  },
+
+  "setTypes": {
+    "reps_weight": {
+      "fields": {
+        "reps": { "type": "number", "required": true },
+        "weight": { "type": "number", "required": true }
+      },
+      "completionRequires": ["reps", "weight"]
+    },
+    "reps": {
+      "fields": {
+        "reps": { "type": "number", "required": true }
+      },
+      "completionRequires": ["reps"]
+    },
+    "duration": {
+      "fields": {
+        "durationSeconds": { "type": "number", "required": true }
+      },
+      "completionRequires": ["durationSeconds"]
+    }
+  },
+
+  "setTypeByExerciseType": {
+    "strength": "reps_weight",
+    "cardio": "duration",
+    "isometric": "duration",
+    "plyometric": "reps"
+  },
+
+  "exercises": {
+    "BARBELL_BACK_SQUAT": {
+      "name": "Barbell Back Squat",
+      "type": "strength",
+      "bodyParts": ["hip", "knee", "spine"]
+    },
+    "BARBELL_FRONT_SQUAT": {
+      "name": "Barbell Front Squat",
+      "type": "strength",
+      "bodyParts": ["hip", "knee", "core"]
+    },
+    "BARBELL_DEADLIFT": {
+      "name": "Barbell Deadlift",
+      "type": "strength",
+      "bodyParts": ["hip", "back", "spine"]
+    },
+    "BARBELL_ROMANIAN_DEADLIFT": {
+      "name": "Barbell Romanian Deadlift",
+      "type": "strength",
+      "bodyParts": ["hip", "back"]
+    },
+    "BARBELL_BENCH_PRESS": {
+      "name": "Barbell Bench Press",
+      "type": "strength",
+      "bodyParts": ["chest", "shoulder", "elbow"]
+    },
+    "BARBELL_OVERHEAD_PRESS": {
+      "name": "Barbell Overhead Press",
+      "type": "strength",
+      "bodyParts": ["shoulder", "elbow", "core"]
+    },
+    "BARBELL_ROW": {
+      "name": "Barbell Row",
+      "type": "strength",
+      "bodyParts": ["back", "elbow"]
+    },
+    "BARBELL_POWER_CLEAN": {
+      "name": "Barbell Power Clean",
+      "type": "strength",
+      "bodyParts": ["hip", "knee", "shoulder"]
+    },
+    "RUN": {
+      "name": "Running",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "CYCLING": {
+      "name": "Cycling",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee"]
+    },
+    "ROWING": {
+      "name": "Rowing Erg",
+      "type": "cardio",
+      "bodyParts": ["back", "hip", "knee"]
+    },
+    "JUMP_ROPE": {
+      "name": "Jump Rope",
+      "type": "cardio",
+      "bodyParts": ["ankle", "knee"]
+    },
+
+    "BASKETBALL": {
+      "name": "Basketball",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "VOLLEYBALL": {
+      "name": "Volleyball",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "SOCCER": {
+      "name": "Soccer",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "FOOTBALL": {
+      "name": "Football",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "shoulder"]
+    },
+    "HOCKEY": {
+      "name": "Hockey",
+      "type": "cardio",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+
+    "SPANISH_SQUAT": {
+      "name": "Spanish Squat",
+      "type": "isometric",
+      "bodyParts": ["knee"]
+    },
+
+    "ISOMETRIC_SPLIT_SQUAT": {
+      "name": "Isometric Split Squat",
+      "type": "isometric",
+      "bodyParts": ["knee", "hip"]
+    },
+
+    "CALF_RAISE_ISO": {
+      "name": "Isometric Calf Raise",
+      "type": "isometric",
+      "bodyParts": ["ankle"]
+    },
+
+    "HAMSTRING_BRIDGE_ISO": {
+      "name": "Hamstring Bridge Hold",
+      "type": "isometric",
+      "bodyParts": ["hip"]
+    },
+
+    "WALL_PUSH_ISO": {
+      "name": "Wall Push Isometric",
+      "type": "isometric",
+      "bodyParts": ["shoulder"]
+    },
+
+    "OVERHEAD_CARRY_ISO": {
+      "name": "Overhead Carry Hold",
+      "type": "isometric",
+      "bodyParts": ["shoulder", "elbow"]
+    },
+
+    "ISOMETRIC_ROW_HOLD": {
+      "name": "Isometric Row Hold",
+      "type": "isometric",
+      "bodyParts": ["elbow", "back"]
+    },
+
+    "PLANK_HOLD": {
+      "name": "Plank Hold",
+      "type": "isometric",
+      "bodyParts": ["core"]
+    },
+    "BROAD_JUMP": {
+      "name": "Broad Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "BOX_JUMP": {
+      "name": "Box Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "DEPTH_JUMP": {
+      "name": "Depth Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "SQUAT_JUMP": {
+      "name": "Squat Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "POGO_JUMP": {
+      "name": "Pogo Jump",
+      "type": "plyometric",
+      "bodyParts": ["ankle"]
+    },
+    "LATERAL_BOUND": {
+      "name": "Lateral Bound",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "BOUNDING": {
+      "name": "Bounding",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "DROP_JUMP": {
+      "name": "Drop Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "SPRINT": {
+      "name": "Sprint",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    },
+    "TUCK_JUMP": {
+      "name": "Tuck Jump",
+      "type": "plyometric",
+      "bodyParts": ["hip", "knee", "ankle"]
+    }
+  }
+}
