@@ -4,8 +4,8 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 
-import authRoutes from "./modules/auth/auth.routes";
-import bodyPartProfileRoutes from "./modules/body-part-profile/body-part-profile.routes";
+import authRoutes from "./routes/auth.routes";
+import bodyPartProfileRoutes from "./routes/body-part-profile.routes";
 import { requireAuth, AuthRequest } from "./middleware/auth.middleware";
 import sessionRoutes from "./routes/session.routes";
 import wellnessRoutes from "./routes/wellness.routes";

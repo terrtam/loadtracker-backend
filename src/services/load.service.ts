@@ -1,9 +1,9 @@
-import prisma from "../../prisma/client";
-import rawConfig from "../../config/app-config.json";
-import type { AppConfig, ExerciseCode, ExerciseType } from "../../types/appConfig";
+import prisma from "../prisma/client";
+import rawConfig from "../config/app-config.json";
+import type { AppConfig, ExerciseCode, ExerciseType } from "../types/app-config.types";
 
 const appConfig = rawConfig as AppConfig;
-import { AggregationLevel, LoadCategory, LoadPoint } from "./load.types";
+import { AggregationLevel, LoadCategory, LoadPoint } from "../types/load.types";
 
 type LoadQuery = {
   userId: number;

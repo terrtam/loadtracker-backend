@@ -1,5 +1,5 @@
 import rawConfig from "../config/app-config.json";
-import type { AppConfig, ExerciseCode, ExerciseType } from "../types/appConfig";
+import type { AppConfig, ExerciseCode, ExerciseType } from "../types/app-config.types";
 import { z } from "zod";
 
 const appConfig = rawConfig as AppConfig;

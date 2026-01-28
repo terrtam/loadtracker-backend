@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
-import prisma from "../../prisma/client";
-import { AuthRequest } from "../../middleware/auth.middleware";
+import { Response } from "express";
+import prisma from "../prisma/client";
+import { AuthRequest } from "../middleware/auth.middleware";
 
 /**
  * POST /api/body-part-profiles
@@ -27,10 +27,8 @@ export const createBodyPartProfile = async (
       },
     });
 
-
     return res.status(201).json(profile);
   } catch (err: any) {
-    // Prisma unique constraint violation
     if (err.code === "P2002") {
       return res.status(409).json({
         message: "Body part profile already exists",
@@ -90,10 +88,7 @@ export const archiveBodyPartProfile = async (
 
   try {
     const result = await prisma.bodyPartProfile.updateMany({
-      where: {
-        id: id,
-        user_id: userId,
-      },
+      where: { id, user_id: userId },
       data: {
         archived: true,
         archived_at: new Date(),
@@ -113,7 +108,6 @@ export const archiveBodyPartProfile = async (
   }
 };
 
-
 /**
  * PATCH /api/body-part-profiles/:id/unarchive
  */
@@ -126,10 +120,7 @@ export const unarchiveBodyPartProfile = async (
 
   try {
     const result = await prisma.bodyPartProfile.updateMany({
-      where: {
-        id: id,
-        user_id: userId,
-      },
+      where: { id, user_id: userId },
       data: {
         archived: false,
         archived_at: null,

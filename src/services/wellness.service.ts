@@ -1,4 +1,4 @@
-import prisma from "../../prisma/client";
+import prisma from "../prisma/client";
 
 export type Aggregation = "daily" | "weekly";
 
@@ -113,4 +113,79 @@ export async function getFatigueSeries(opts: GetWellnessSeriesOpts) {
     logs.map((l) => ({ logged_at: l.logged_at, value: l.fatigue_score })),
     opts.aggregation ?? "daily"
   );
+}
+
+interface CreateWellnessLogOpts {
+  userId: number;
+  bodyPartProfileId: number;
+  painScore: number;
+  fatigueScore: number;
+  loggedAt?: Date;
+}
+
+export async function createWellnessLog(opts: CreateWellnessLogOpts) {
+  // Ownership check
+  const bodyPartProfile = await prisma.bodyPartProfile.findFirst({
+    where: {
+      id: opts.bodyPartProfileId,
+      user_id: opts.userId,
+      archived: false,
+    },
+  });
+
+  if (!bodyPartProfile) {
+    throw new Error("BODY_PART_PROFILE_NOT_FOUND");
+  }
+
+  return prisma.wellnessLog.create({
+    data: {
+      pain_score: opts.painScore,
+      fatigue_score: opts.fatigueScore,
+      logged_at: opts.loggedAt ?? new Date(),
+
+      user: { connect: { id: opts.userId } },
+      bodyPartProfile: { connect: { id: opts.bodyPartProfileId } },
+    },
+  });
+}
+
+/* ---------------------------
+   List wellness logs
+----------------------------*/
+
+interface ListWellnessLogsOpts {
+  userId: number;
+  bodyPartProfileId?: number;
+  from?: Date;
+  to?: Date;
+  limit?: number;
+}
+
+export async function listWellnessLogs(opts: ListWellnessLogsOpts) {
+  const where: any = { user_id: opts.userId };
+
+  if (opts.bodyPartProfileId) {
+    where.body_part_profile_id = opts.bodyPartProfileId;
+  }
+
+  if (opts.from || opts.to) {
+    where.logged_at = {};
+    if (opts.from) where.logged_at.gte = opts.from;
+    if (opts.to) where.logged_at.lte = opts.to;
+  }
+
+  return prisma.wellnessLog.findMany({
+    where,
+    orderBy: { logged_at: "desc" },
+    take: opts.limit,
+    include: {
+      bodyPartProfile: {
+        select: {
+          id: true,
+          bodyPartName: true,
+          side: true,
+        },
+      },
+    },
+  });
 }

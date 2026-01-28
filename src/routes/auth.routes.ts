@@ -1,15 +1,12 @@
 import { Router } from "express";
-import { signup, login, changePassword,  forgotPassword, resetPassword, deleteAccount } from "./auth.controller";
-import { requireAuth, AuthRequest } from "../../middleware/auth.middleware";
-import prisma from "../../prisma/client";
+import { signup, login, deleteAccount } from "../controllers/auth.controller";
+import { requireAuth, AuthRequest } from "../middleware/auth.middleware";
+import prisma from "../prisma/client";
 
 const router = Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/forgot-password", forgotPassword);
-router.post("/reset-password", resetPassword);
-router.post("/change-password", requireAuth, changePassword);
 router.get("/me", requireAuth, async (req: AuthRequest, res) => {
   try {
     if (!req.user) {

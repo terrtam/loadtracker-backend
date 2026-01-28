@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listSessions, createSession } from "../controllers/sessions/createSession";
+import { listSessions, createSession } from "../controllers/session.controller";
 import { requireAuth } from "../middleware/auth.middleware";
 
 const router = Router();

@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { loadByCategory } from "./load.controller";
-import { requireAuth } from "../../middleware/auth.middleware";
-import { validateQuery } from "../../middleware/validate";
-import { loadQuerySchema, loadCategorySchema } from "../../validators/load.validator";
+import { loadByCategory } from "../controllers/load.controller";
+import { requireAuth } from "../middleware/auth.middleware";
+import { validateQuery } from "../middleware/validate.middleware";
+import { loadQuerySchema, loadCategorySchema } from "../validators/load.validator";
 
 const router = Router();
 

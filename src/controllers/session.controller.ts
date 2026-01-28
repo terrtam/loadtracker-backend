@@ -1,7 +1,7 @@
 import { Response } from "express";
-import prisma from "../../prisma/client";
-import { AuthRequest } from "../../middleware/auth.middleware";
-import { validateSessionSets } from "../../validators/session.validator";
+import prisma from "../prisma/client";
+import { AuthRequest } from "../middleware/auth.middleware";
+import { validateSessionSets } from "../validators/session.validator";
 
 /**
  * POST /api/sessions

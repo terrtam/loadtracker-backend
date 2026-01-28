@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { AuthRequest } from "../../middleware/auth.middleware";
-import { getLoadSeries } from "./load.service";
+import { AuthRequest } from "../middleware/auth.middleware";
+import { getLoadSeries } from "../services/load.service";
 
 export async function loadByCategory(req: AuthRequest, res: Response) {
   if (!req.user) {
