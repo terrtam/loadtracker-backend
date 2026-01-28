@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import prisma from "../../prisma/client";
+import prisma from "../prisma/client";
 import bcrypt from "bcryptjs";
 
 export const createUser = async (req: Request, res: Response) => {
