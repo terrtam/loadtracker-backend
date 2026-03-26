@@ -1,18 +1,21 @@
+/**
+ * Controller for wellness tracking.
+ *
+ * Handles creating wellness logs and fetching
+ * pain and fatigue data for the authenticated user.
+ * All business logic is delegated to the service layer.
+ */
+
 import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
-import {
-  getPainSeries,
-  getFatigueSeries,
-  createWellnessLog,
-  listWellnessLogs,
-} from "../services/wellness.service";
+import { getPainSeries, getFatigueSeries, createWellnessLog, 
+  listWellnessLogs } from "../services/wellness.service";
 
 
 export async function createWellness(req: AuthRequest, res: Response) {
   const userId = req.user!.id;
   const { bodyPartProfileId, painScore, fatigueScore, loggedAt } = req.body;
 
-  // Required validation (HTTP concern)
   if (
     bodyPartProfileId === undefined ||
     painScore === undefined ||
@@ -40,7 +43,7 @@ export async function createWellness(req: AuthRequest, res: Response) {
       });
     }
 
-    throw err; // let global error middleware handle unexpected errors
+    throw err;
   }
 }
 

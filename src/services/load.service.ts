@@ -1,3 +1,10 @@
+/**
+ * Load calculation service.
+ * Fetches session data and computes aggregated load
+ * metrics (volume and intensity) over time, grouped
+ * by category and aggregation level.
+ */
+
 import prisma from "../prisma/client";
 import rawConfig from "../config/app-config.json";
 import type { AppConfig, ExerciseCode, ExerciseType } from "../types/app-config.types";
@@ -10,7 +17,7 @@ type LoadQuery = {
   startDate: Date;
   endDate: Date;
   aggregation: AggregationLevel;
-  bodyPartNames?: string[]; // e.g. ["knee", "ankle"]
+  bodyPartNames?: string[];
 };
 
 export async function getLoadSeries(
@@ -48,7 +55,6 @@ export async function getLoadSeries(
       if (!exercise) continue;
       if (exercise.type !== category) continue;
 
-      // Body part filtering (pre-aggregation)
       if (
         query.bodyPartNames &&
         !exercise.bodyParts.some((bp: string) =>

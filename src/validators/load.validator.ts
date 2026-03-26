@@ -1,3 +1,8 @@
+/**
+ * Validation schemas for load routes.
+ * Validates load categories and query parameters.
+ */
+
 import { z } from "zod";
 
 export const loadCategorySchema = z.enum([

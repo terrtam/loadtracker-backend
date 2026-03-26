@@ -1,9 +1,15 @@
+/**
+ * Shared types for load data.
+ * Defines load categories, aggregation levels,
+ * and the structure of aggregated load points.
+ */
+
 export type AggregationLevel = "daily" | "weekly" | "monthly";
 
 export type LoadPoint = {
-  date: string;              // ISO date or week start
-  volume: number;            // 0 allowed
-  intensity: number | null;  // null if no valid RPE
+  date: string;
+  volume: number;
+  intensity: number | null;
 };
 
 export type LoadCategory =

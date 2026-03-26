@@ -1,3 +1,9 @@
+/**
+ * Wellness service.
+ * Contains business logic for creating wellness logs
+ * and aggregating pain and fatigue data over time.
+ */
+
 import prisma from "../prisma/client";
 
 export type Aggregation = "daily" | "weekly";
@@ -148,10 +154,6 @@ export async function createWellnessLog(opts: CreateWellnessLogOpts) {
     },
   });
 }
-
-/* ---------------------------
-   List wellness logs
-----------------------------*/
 
 interface ListWellnessLogsOpts {
   userId: number;

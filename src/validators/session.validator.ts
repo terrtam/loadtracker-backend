@@ -1,30 +1,27 @@
+/**
+ * Validation logic for session sets.
+ * Validates incoming session sets based on exercise
+ * configuration and enforces correct set structure
+ * before sessions are created.
+ */
+
 import rawConfig from "../config/app-config.json";
 import type { AppConfig, ExerciseCode, ExerciseType } from "../types/app-config.types";
 import { z } from "zod";
 
 const appConfig = rawConfig as AppConfig;
 
-/* -------------------------
-   Zod field schemas
--------------------------- */
-
 const repsSchema = z.number().int().min(1);
 const weightSchema = z.number().min(0);
 const durationSchema = z.number().min(0);
 const rpeSchema = z.number().min(1).max(10);
-
-/* -------------------------
-   Base schema (shared)
--------------------------- */
 
 const baseSetSchema = z.object({
   exercise_code: z.string(),
   rpe: rpeSchema,
 });
 
-/* -------------------------
-   Set-type schemas
--------------------------- */
+
 
 const repsWeightSchema = baseSetSchema
   .extend({
@@ -45,27 +42,15 @@ const durationSchemaZod = baseSetSchema
   })
   .strict();
 
-/* -------------------------
-   Map set type → schema
--------------------------- */
-
 const SET_SCHEMAS = {
   reps_weight: repsWeightSchema,
   reps: repsOnlySchema,
   duration: durationSchemaZod,
 } as const;
 
-/* -------------------------
-   Inferred type (optional)
--------------------------- */
-
 export type IncomingSet = z.infer<
   (typeof SET_SCHEMAS)[keyof typeof SET_SCHEMAS]
 >;
-
-/* -------------------------
-   Validation entry point
--------------------------- */
 
 export function validateSessionSets(sets: unknown[]) {
   if (!Array.isArray(sets) || sets.length === 0) {

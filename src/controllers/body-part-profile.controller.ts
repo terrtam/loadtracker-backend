@@ -1,10 +1,13 @@
+/**
+ * Controller for Body Part Profiles.
+ * Handles creating, fetching, archiving, and unarchiving
+ * body part profiles for the authenticated user.
+ */
+
 import { Response } from "express";
 import prisma from "../prisma/client";
 import { AuthRequest } from "../middleware/auth.middleware";
 
-/**
- * POST /api/body-part-profiles
- */
 export const createBodyPartProfile = async (
   req: AuthRequest,
   res: Response
@@ -42,9 +45,6 @@ export const createBodyPartProfile = async (
   }
 };
 
-/**
- * GET /api/body-part-profiles
- */
 export const getBodyPartProfiles = async (
   req: AuthRequest,
   res: Response
@@ -76,9 +76,7 @@ export const getBodyPartProfiles = async (
   }
 };
 
-/**
- * PATCH /api/body-part-profiles/:id/archive
- */
+
 export const archiveBodyPartProfile = async (
   req: AuthRequest,
   res: Response
@@ -108,9 +106,6 @@ export const archiveBodyPartProfile = async (
   }
 };
 
-/**
- * PATCH /api/body-part-profiles/:id/unarchive
- */
 export const unarchiveBodyPartProfile = async (
   req: AuthRequest,
   res: Response

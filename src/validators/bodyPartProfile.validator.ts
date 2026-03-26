@@ -1,3 +1,7 @@
+/**
+ * Validation schema for creating body part profiles.
+ */
+
 import { z } from "zod";
 
 export const createBodyPartProfileSchema = z.object({

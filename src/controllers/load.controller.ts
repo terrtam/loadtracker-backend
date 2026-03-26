@@ -1,3 +1,9 @@
+/**
+ * Controller for load data.
+ * Handles fetching aggregated load data by category
+ * for the authenticated user based on query parameters.
+ */
+
 import { Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
 import { getLoadSeries } from "../services/load.service";

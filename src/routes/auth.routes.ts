@@ -1,3 +1,9 @@
+/**
+ * Routes for authentication.
+ * Routes for user signup, login, fetching the authenticated user,
+ * and deleting an account.
+ */
+
 import { Router } from "express";
 import { signup, login, deleteAccount } from "../controllers/auth.controller";
 import { requireAuth, AuthRequest } from "../middleware/auth.middleware";

@@ -1,3 +1,9 @@
+/** Controller for Authentication.
+ *  User signup with bcrypt for hashing.
+ *  User login with credential verification and issues a JWT.
+ *  User deletion for authenticated users and password confirmed.
+ */
+
 import { Request, Response } from "express";
 import { AuthRequest } from "../middleware/auth.middleware";
 import bcrypt from "bcryptjs";

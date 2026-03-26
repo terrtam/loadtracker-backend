@@ -1,3 +1,9 @@
+/** Middleware for authentication.
+ *  Verifies JWT from Authorization header.
+ *  Attaches the authenticated user ID to the request.
+ *  Blocks the request if the token is missing or invalid.
+ */
+
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 

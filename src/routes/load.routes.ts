@@ -1,3 +1,9 @@
+/**
+ * Routes for load data.
+ * Defines routes for fetching aggregated load data
+ * by category with authentication and request validation.
+ */
+
 import { Router } from "express";
 import { loadByCategory } from "../controllers/load.controller";
 import { requireAuth } from "../middleware/auth.middleware";
